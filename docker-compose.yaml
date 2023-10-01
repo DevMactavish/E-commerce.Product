@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  product-service:
+    image: product-api
+    build:
+      context: .
+      dockerfile: ./src/Api/Ecommerce.Product.Api/Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - elasticsearch
+      - kibana
+    networks:
+      - elastic
+  
+#  mssql:
+#    image: mcr.microsoft.com/azure-sql-edge:latest
+#    cap_add: [ 'SYS_PTRACE' ]
+#    environment:
+#      - "ACCEPT_EULA=1"
+#      - "MSSQL_SA_PASSWORD=SU2orange!"
+#    ports:
+#      - "1433:1433"
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    networks:
+      - elastic
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.6.2
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge
+
+volumes:
+  elasticsearch-data:

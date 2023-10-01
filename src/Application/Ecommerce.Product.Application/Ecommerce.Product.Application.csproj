@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Mapster" Version="7.4.0" />
+      <PackageReference Include="MediatR" Version="10.0.1" />
+      <PackageReference Include="MediatR.Contracts" Version="1.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Domain\Ecommerce.Product.Domain.Service\Ecommerce.Product.Domain.Service.csproj" />
+      <ProjectReference Include="..\..\Domain\Ecommerce.Product.Domain\Ecommerce.Product.Domain.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\Ecommerce.Product.Infrastructure\Ecommerce.Product.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
